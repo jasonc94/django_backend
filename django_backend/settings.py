@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     # local
-    "polls.apps.PollsConfig",
+    "polls",
 ]
 
 MIDDLEWARE = [
