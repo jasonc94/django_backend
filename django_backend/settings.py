@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "corsheaders",
     # local
     "polls",
+    "users",
 ]
 
 MIDDLEWARE = [
