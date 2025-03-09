@@ -7,7 +7,15 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ["id", "name", "start_date", "end_date", "description", "technologies"]
+        fields = [
+            "id",
+            "company",
+            "name",
+            "start_date",
+            "end_date",
+            "description",
+            "technologies",
+        ]
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -22,6 +30,6 @@ class CompanySerializer(serializers.ModelSerializer):
             "start_date",
             "end_date",
             "description",
-            "logo_url",
+            "logo",
             "projects",
         ]
