@@ -31,4 +31,5 @@ urlpatterns = [
     path("api/stocks/", include("stocks.urls")),
     # polls app url
     path("polls/", include("polls.urls")),
+    path("api/resume/", include("resume.urls")),
 ]
