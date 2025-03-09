@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "polls",
     "users",
     "stocks",
+    "resume",
 ]
 
 MIDDLEWARE = [
