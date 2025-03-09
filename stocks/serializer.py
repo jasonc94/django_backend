@@ -14,7 +14,7 @@ class TransactionSerializer(serializers.ModelSerializer):
             "price_per_share",
             "date",
         )
-        read_only_fields = ("user", "date")
+        read_only_fields = ["user"]
 
 
 class PortfolioSerializer(serializers.Serializer):
