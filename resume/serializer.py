@@ -11,8 +11,8 @@ class ProjectSerializer(serializers.ModelSerializer):
             "id",
             "company",
             "name",
-            "start_date",
-            "end_date",
+            "startDate",
+            "endDate",
             "description",
             "technologies",
         ]
@@ -27,8 +27,8 @@ class CompanySerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
-            "start_date",
-            "end_date",
+            "startDate",
+            "endDate",
             "description",
             "logo",
             "projects",
