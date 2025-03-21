@@ -49,12 +49,14 @@ SIMPLE_JWT = {
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "channels",
     "rest_framework",
     "corsheaders",
     # local
@@ -62,6 +64,7 @@ INSTALLED_APPS = [
     "users",
     "stocks",
     "resume",
+    "webrtc",
 ]
 
 MIDDLEWARE = [
@@ -152,3 +155,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
 
 TIME_ZONE = "US/Arizona"
+
+ASGI_APPLICATION = "django_backend.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
