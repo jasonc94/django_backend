@@ -41,6 +41,9 @@ class WebRTCConsumer(AsyncWebsocketConsumer):
         )
 
     async def broadcast_message(self, event):
+        receiver = event.get("payload", {}).get("receiver")
+        if receiver and receiver != self.userId:
+            return
         if event["sender"] == self.userId:
             return
         await self.send(
