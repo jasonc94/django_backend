@@ -50,3 +50,5 @@ test-results/
 # Other files
 *.bak
 *.orig
+
+*.pem
