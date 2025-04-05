@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+import boto3
 import os
 
 load_dotenv()
@@ -83,6 +84,10 @@ MIDDLEWARE = [
 ENV = os.environ.get("DJANGO_ENV", "DEV")
 IS_DEV = ENV.upper() == "DEV"
 
+AWS_REGION_NAME = os.environ.get("AWS_REGION_NAME")
+
+boto3_logs_client = boto3.client("logs", region_name=AWS_REGION_NAME)
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -106,7 +111,7 @@ LOGGING = {
             {
                 "watchtower": {
                     "class": "watchtower.CloudWatchLogHandler",
-                    "boto3_session": None,
+                    "boto3_client": boto3_logs_client,
                     "log_group": os.environ.get("AWS_LOG_GROUP"),
                     "level": "INFO",
                 }
