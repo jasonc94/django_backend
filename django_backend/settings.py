@@ -78,6 +78,10 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
+
+ENV = os.environ.get("DJANGO_ENV", "DEV")
+IS_DEV = ENV.upper() == "DEV"
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -91,18 +95,33 @@ LOGGING = {
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
-            "formatter": os.environ.get("DJANGO_ENV") == "DEV"
-            and "colored"
-            or "standard",
+            "formatter": "colored" if IS_DEV else "standard",
             "filters": [],
         },
-    },
-    "loggers": {
-        "django": {"handlers": ["console"], "level": "INFO", "propagate": True}
+        **(
+            {
+                "watchtower": {
+                    "class": "watchtower.CloudWatchLogHandler",
+                    "boto3_session": None,
+                    "log_group": "django-backend-cloudwatch",
+                    "stream_name": f"django-{ENV.lower()}",
+                    "level": "INFO",
+                }
+            }
+            if not IS_DEV
+            else {}
+        ),
     },
     "root": {
-        "handlers": ["console"],
+        "handlers": ["console"] + ([] if IS_DEV else ["watchtower"]),
         "level": "INFO",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"] + ([] if IS_DEV else ["watchtower"]),
+            "level": "INFO",
+            "propagate": True,
+        }
     },
 }
 
