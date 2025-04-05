@@ -76,6 +76,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django_backend.request-logger-middleware.RequestLoggerMiddleware",
 ]
 
 
@@ -90,7 +91,10 @@ LOGGING = {
             "()": "colorlog.ColoredFormatter",
             "format": "%(log_color)s%(asctime)s [%(levelname)s] %(name)s: %(bold_white)s%(message)s",
         },
-        "standard": {"format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s"},
+        "standard": {
+            "()": "django_backend.extra-fields-formatter.ExtraFieldsFormatter",
+            "format": "%(asctime)s [%(levelname)s] %(name)s %(extra_info)s: %(message)s",
+        },
     },
     "handlers": {
         "console": {
@@ -103,8 +107,7 @@ LOGGING = {
                 "watchtower": {
                     "class": "watchtower.CloudWatchLogHandler",
                     "boto3_session": None,
-                    "log_group": "django-backend-cloudwatch",
-                    "stream_name": f"django-{ENV.lower()}",
+                    "log_group": os.environ.get("AWS_LOG_GROUP"),
                     "level": "INFO",
                 }
             }

@@ -12,3 +12,5 @@ djlint
 daphne
 channels[daphne]
 twisted[http2,tls]
+boto3
+watchtower
