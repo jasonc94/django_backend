@@ -113,6 +113,7 @@ LOGGING = {
                     "class": "watchtower.CloudWatchLogHandler",
                     "boto3_client": boto3_logs_client,
                     "log_group": os.environ.get("AWS_LOG_GROUP"),
+                    "formatter": "standard",
                     "level": "INFO",
                 }
             }
