@@ -17,16 +17,16 @@ class RequestLoggerMiddleware:
 
             path = request.path
 
-            log_extra = {}
+            extras = {}
             if client_ip:
-                log_extra["ip"] = client_ip
+                extras["ip"] = client_ip
             if device:
-                log_extra["device"] = device
+                extras["device"] = device
             if path:
-                log_extra["path"] = path
+                extras["path"] = path
 
             # Log the request with the dynamically built extra fields
-            self.logger.info("Request received", extra=log_extra)
+            self.logger.info("Request received", extra={"extras": extras})
 
         # Process the response
         response = self.get_response(request)

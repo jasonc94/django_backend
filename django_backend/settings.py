@@ -97,8 +97,11 @@ LOGGING = {
             "format": "%(log_color)s%(asctime)s [%(levelname)s] %(name)s: %(bold_white)s%(message)s",
         },
         "standard": {
-            "()": "django_backend.extra-fields-formatter.ExtraFieldsFormatter",
+            "()": "django_backend.standard-extras-formatter.ExtraFieldsFormatter",
             "format": "%(asctime)s [%(levelname)s] %(name)s %(extra_info)s: %(message)s",
+        },
+        "structuredJson": {
+            "()": "django_backend.structured-json-formatter.StructuredJsonFormatter",
         },
     },
     "handlers": {
@@ -113,7 +116,7 @@ LOGGING = {
                     "class": "watchtower.CloudWatchLogHandler",
                     "boto3_client": boto3_logs_client,
                     "log_group": os.environ.get("AWS_LOG_GROUP"),
-                    "formatter": "standard",
+                    "formatter": "structuredJson",
                     "level": "INFO",
                 }
             }
