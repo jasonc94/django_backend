@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "users",
     "stocks",
     "resume",
+    "chatrooms",
     "webrtc",
 ]
 

@@ -32,4 +32,5 @@ urlpatterns = [
     # polls app url
     path("polls/", include("polls.urls")),
     path("api/resume/", include("resume.urls")),
+    path("api/chatrooms/", include("chatrooms.urls")),
 ]
