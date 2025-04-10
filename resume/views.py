@@ -4,13 +4,13 @@ from resume.serializer import CompanySerializer, ProjectSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
-class CompanyViewSet(viewsets.ModelViewSet):
+class CompanyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
