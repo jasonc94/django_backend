@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class CompanyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
-    queryset = Company.objects.all()
+    queryset = Company.objects.order_by("-startDate")
     serializer_class = CompanySerializer
 
 
