@@ -10,7 +10,10 @@ class RoomViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = Room.objects.prefetch_related(
         models.Prefetch(
-            "participants", queryset=Participant.objects.filter(leftAt__isnull=True)
+            "room_participants",
+            queryset=Participant.objects.filter(leftAt__isnull=True).select_related(
+                "user"
+            ),
         )
     )
     serializer_class = RoomSerializer

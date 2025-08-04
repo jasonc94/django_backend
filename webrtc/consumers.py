@@ -3,6 +3,7 @@ from typing import Literal
 from channels.generic.websocket import AsyncWebsocketConsumer
 from chatrooms.signals import user_joined_room, user_left_room
 import asyncio
+from urllib.parse import parse_qs
 from asgiref.sync import sync_to_async
 
 
@@ -10,6 +11,11 @@ class WebRTCConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_group_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.userId = self.scope["url_route"]["kwargs"]["userId"]
+
+        query_string = self.scope["query_string"].decode()
+        query_params = parse_qs(query_string)
+
+        self.displayName = query_params.get("displayName", [self.userId])[0]
 
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.accept()
@@ -54,6 +60,9 @@ class WebRTCConsumer(AsyncWebsocketConsumer):
         signal = user_joined_room if event == "join" else user_left_room
         asyncio.create_task(
             sync_to_async(signal.send)(
-                sender=self, user=self.userId, room_name=self.room_group_name
+                sender=self,
+                user_id=self.userId,
+                user_display_name=self.displayName,
+                room_name=self.room_group_name,
             )
         )
