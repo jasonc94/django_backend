@@ -4,9 +4,12 @@ import logging
 class ExtraFieldsFormatter(logging.Formatter):
     def format(self, record):
         # Get values, default to empty string if None
-        ip = getattr(record, "ip", None)
-        device = getattr(record, "device", None)
-        path = getattr(record, "path", None)
+        extras = getattr(record, "extras", {})
+        ip = extras.get("ip")
+        device = extras.get("device")
+        path = extras.get("path")
+        userId = extras.get("userId")
+        userName = extras.get("userName")
 
         # Construct the message dynamically
         extra_fields = []
@@ -16,6 +19,10 @@ class ExtraFieldsFormatter(logging.Formatter):
             extra_fields.append(f"Device: {device}")
         if path:
             extra_fields.append(f"Path: {path}")
+        if userId:
+            extra_fields.append(f"User ID: {userId}")
+        if userName:
+            extra_fields.append(f"User Name: {userName}")
 
         # Join the extra fields into a single string
         extra_info = ", ".join(extra_fields)

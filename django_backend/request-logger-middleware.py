@@ -1,6 +1,7 @@
 import logging
 from typing import Callable
 from django.http import HttpRequest, HttpResponse
+from urllib.parse import unquote
 
 
 class RequestLoggerMiddleware:
@@ -17,6 +18,12 @@ class RequestLoggerMiddleware:
 
             path = request.path
 
+            userId = request.META.get("HTTP_X_USER_ID", "")
+
+            displayName = request.META.get("HTTP_X_USER_NAME", "")
+
+            userName = unquote(displayName) if displayName else None
+
             extras = {}
             if client_ip:
                 extras["ip"] = client_ip
@@ -24,6 +31,10 @@ class RequestLoggerMiddleware:
                 extras["device"] = device
             if path:
                 extras["path"] = path
+            if userId:
+                extras["userId"] = userId
+            if userName:
+                extras["userName"] = userName
 
             # Log the request with the dynamically built extra fields
             self.logger.info("Request received", extra={"extras": extras})

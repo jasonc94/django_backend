@@ -15,6 +15,7 @@ from datetime import timedelta
 from dotenv import load_dotenv
 import boto3
 import os
+from corsheaders.defaults import default_headers
 
 load_dotenv()
 
@@ -99,7 +100,7 @@ LOGGING = {
         },
         "standard": {
             "()": "django_backend.standard-extras-formatter.ExtraFieldsFormatter",
-            "format": "%(asctime)s [%(levelname)s] %(name)s %(extra_info)s: %(message)s",
+            "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s %(extra_info)s",
         },
         "structuredJson": {
             "()": "django_backend.structured-json-formatter.StructuredJsonFormatter",
@@ -217,6 +218,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "x-user-id",
+    "x-user-name",
+]
 
 TIME_ZONE = "US/Arizona"
 

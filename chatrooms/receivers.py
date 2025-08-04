@@ -12,6 +12,10 @@ def handle_user_join(sender, user_id, user_display_name, room_name, **kwargs):
         userId=user_id, defaults={"name": user_display_name}
     )
 
+    if user.name != user_display_name:
+        user.name = user_display_name
+        user.save()
+
     participant, created = Participant.objects.get_or_create(user=user, room=room)
 
     if not created:
